@@ -1,4 +1,4 @@
-use <parts/include/microServo_neg2.scad>;
+use <parts/include/microServo.scad>;
 use <parts/servoMount.scad>;
 use <parts/batteryMount.scad>;
 use <parts/batteryAddOn.scad>;
