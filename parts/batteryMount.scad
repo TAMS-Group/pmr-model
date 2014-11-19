@@ -29,9 +29,9 @@ module batteryMount(kantenlaenge){
 						translate([0,(wandstaerke)/2+5.8,0]) sideWall(kantenlaenge-17, laenge+1, wandstaerke, radiusRotationsgelenk-1);	
 					}
 					// Wand mit Servo
-						translate([0,kantenlaenge-(wandstaerke)/2-0.25,0]) 
-							rotate(a=0,v=[1,0,0]) 
-								sideWall_withServoAxisFix(kantenlaenge-4-7-2, laenge+6, wandstaerke+0.5, radiusRotationsgelenk);			
+					translate([0,kantenlaenge-(wandstaerke)/2-0.25,0]) 
+						rotate(a=0,v=[1,0,0]) 
+							sideWall_withServoAxisFix(kantenlaenge-4-7-2, laenge+6, wandstaerke+0.5, radiusRotationsgelenk);			
 				}
 				// Schrauben und Magnetlöcher
 				translate([0, kantenlaenge/2, 0]) mirror([0,0,1]) busContacts(kantenlaenge, factor*kantenlaenge, 5);						

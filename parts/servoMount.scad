@@ -3,7 +3,7 @@ use <include/sideWall.scad>
 use <batteryAddOn.scad>
 
 zugabe = 2+1;
-//kantenlaenge = 47+zugabe;
+kantenlaenge = 47+zugabe;
 wandstaerke = 2;
 laenge = 27;
 radiusRotationsgelenk = 12;
