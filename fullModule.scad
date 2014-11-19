@@ -1,15 +1,16 @@
-use <include/microServo_neg2.scad>;
-use <servoMount.scad>;
-use <batteryMount.scad>;
-use <batteryAddOn.scad>;
+use <parts/include/microServo_neg2.scad>;
+use <parts/servoMount.scad>;
+use <parts/batteryMount.scad>;
+use <parts/batteryAddOn.scad>;
 
 
 $fn=50;
-size = 52;
+size = 53;
 faceStrength = 3;
-akkuheight = 10;
 
-mirror([0,0,1]) translate([0,0,64]) rotate(a=-90,v=[0,1,0]) translate([0.5,0,0]) robotModule(size);
+//mirror([0,0,1]) translate([0,0,-66])
+//translate([0,0,16]) 
+rotate(a=-90,v=[0,1,0]) robotModule(size);
 	
 
 module robotModule(size){
