@@ -1,7 +1,9 @@
+magnetHeight = 1.9;
+magnetRad = 3.1;
+
 $fn = 50;
 
-neodymMagnet(2,1);
 
-module neodymMagnet(rad, height){
-	translate([0,0,-height/2]) cylinder(r=rad, h=height);
+module neodymMagnet(magnetRad, magnetHeight){
+	translate([0,0,-magnetRad/2]) cylinder(r=magnetRad, h=magnetHeight);
 }

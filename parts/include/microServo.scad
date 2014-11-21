@@ -1,9 +1,12 @@
+// simplified model of the tower-pro mg90 micro-servo
+
 width = 13.5;
 length = 23;
 
 $fn=50;
 
-translate([0,0,0]) {servo();}
+servo();
+translate([5,0,19.5]) axisMount();
 
 module servo(){
 	union(){
@@ -61,4 +64,31 @@ module servo(){
 		}
 	}
 	gearHeight = 5.5;
+}
+
+
+//	Mounting lever of micro servo tower-pro MG90
+radBase1 = 2.3;
+radBase2 = 3.5;
+heightBase = 2.4;
+
+radAxis = 3.9;
+heightAxis = 6;
+
+module axisMount(){
+	difference(){
+		union(){
+			// base of the lever
+			hull(){
+				cylinder(r=radBase2, h=heightBase);				
+				translate([23-radBase1-radBase2,0,0]){
+					cylinder(r=radBase1, h=heightBase);
+				}
+			}
+			// axis
+			translate([0,0,-1]){
+				cylinder(r=radAxis, h=heightAxis);
+			}
+		}
+	}
 }

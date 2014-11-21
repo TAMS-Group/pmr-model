@@ -1,29 +1,27 @@
-use <neodymMagnet.scad>;
-use <nutsnbolts/cyl_head_bolt.scad>;
+// connection faces of the three different robot parts
+
+include <neodymMagnet.scad>;
+use <../../nutsnbolts/cyl_head_bolt.scad>;
 use <busContact.scad>
 
-zugabe = 2+1;
-
-laenge = 27;
-radiusRotationsgelenk = 15.2;
-factor = 0.65;//0.7;//0.75;
-front_holeOffset = 0.125/2;
-magnetHeight = 1.9;
-magnetRad = 3.1;
-
+factor = 0.65;
+thickness = 5;
 stabilisator = 3;
 
 $fn=50;
 
 
 difference(){
-	facePlateMagnetBus_v3(53, factor*53, 5, stabilisator);
+	facePlate(53, factor*53, thickness);
+	//facePlate(53, factor*53, thickness, stabilisator);
 	holes_out(53, factor*53, 11, 2);
-	busContacts(53, factor*53, 5);
-	//nutCatches(53, factor*53, 5);
-	//screws(53, factor*53, 5);
-	//busContactsScrew_inAsy(53, factor*53, 5);
+	busContacts(53, factor*53, thickness);
+	//nutCatches(53, factor*53, thickness);
+	//screws(53, factor*53, thickness);
+	//busContactsScrew_inAsy(53, factor*53, thickness);
 }
+
+
 
 
 module faceFrame(sizeOut, sizeIn, thickness){
@@ -35,8 +33,7 @@ module faceFrame(sizeOut, sizeIn, thickness){
 	}
 }
 
-
-module facePlate(sizeOut, sizeIn, thickness, stabilisator){	
+module facePlate(sizeOut, sizeIn, thickness, stabilisator=0){	
 	//frontplate
 	union(){
 		faceFrame(sizeOut, sizeIn, thickness);
@@ -59,38 +56,18 @@ module facePlate(sizeOut, sizeIn, thickness, stabilisator){
 }	
 
 
-module facePlateMagnetBus_v3(sizeOut, sizeIn, thickness, stabilisator=0){
-	width = sizeOut/2-sizeIn/2;
-	x = -thickness/2-0.1;
-	offset = width/10;
-	tolerance = 1.1;
-	facePlate(sizeOut, sizeIn, thickness, stabilisator);		
-}
-
-
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------- Modules for substraction to create slots for different srews and magnets ----------------------------------------------------------
 module busContacts(sizeOut, sizeIn, thickness){
 	width = sizeOut/2-sizeIn/2;
 	x = -thickness/2-0.1;
 	offset = width/10;
-	tolerance = 1.1;
+	//tolerance = 1.1;
 	union(){				
 		for ( i = [0 : 3] ){
-			#rotate([i*90, 0, 0]) translate([x, sizeIn/2+width/2-offset, sizeIn/2+width/2-offset]) rotate([0,90,0]) busContact(magnetRad, magnetHeight, "M4", 3, 2, 5);
+			rotate([i*90, 0, 0]) translate([x, sizeIn/2+width/2-offset, sizeIn/2+width/2-offset]) rotate([0,90,0]) busContact(magnetRad, magnetHeight, "M4", 3, 2, 5);
 			rotate([i*90, 0, 0]) translate([x, sizeIn/2-width/2+offset, sizeIn/2-width/2+offset]) rotate([0,90,0]) busContact(magnetRad, magnetHeight, "M4", 3, 2, 5);
 		}
-	}
-}
-
-
-module busContacts_in(sizeOut, sizeIn, thickness){
-	width = sizeOut/2-sizeIn/2;
-	x = -thickness/2-0.1;
-	offset = width/10;
-	tolerance = 1.1;
-	union(){				
-		for ( i = [0 : 3] ){		
-			rotate([i*90, 0, 0]) translate([x, sizeIn/2-width/2+offset, sizeIn/2-width/2+offset]) rotate([0,90,0]) busContact_withoutNut(magnetRad, magnetHeight, "M4", 3, 2, 5);
-		}				
 	}
 }
 
@@ -119,34 +96,6 @@ module busContacts_out(sizeOut, sizeIn, thickness){
 	}
 }
 
-module busContacts_outAsy(sizeOut, sizeIn, thickness){
-	width = sizeOut/2-sizeIn/2;
-	x = -thickness/2-0.1;
-	offset = width/10;
-	tolerance = 1.1;
-	union(){				
-		for ( i = [0 :2: 3] ){
-			rotate([i*90, 0, 0]) translate([x, sizeIn/2+width/2-offset, sizeIn/2+width/2-offset]) rotate([0,90,0]) busContact(magnetRad, magnetHeight, "M4", 3, 2, 5);			
-		}		
-	}
-}
-
-
-
-module holes(sizeOut, sizeIn, thickness){
-	width = sizeOut/2-sizeIn/2;
-	x = -thickness/2-0.1;
-	offset = width/10;
-	tolerance = 1.1;
-	tol = 0.2;
-	union(){				
-		for ( i = [0 : 3] ){
-			rotate([i*90, 0, 0]) translate([x, sizeIn/2+width/2-offset, sizeIn/2+width/2-offset]) rotate([0,90,0]) cylinder(r=3+tol, h=thickness+0.2);
-			rotate([i*90, 0, 0]) translate([x, sizeIn/2-width/2+offset, sizeIn/2-width/2+offset]) rotate([0,90,0]) cylinder(r=3+tol, h=thickness+0.2);
-		}			
-	}
-}
-
 module holes_out(sizeOut, sizeIn, thickness, rad){
 	width = sizeOut/2-sizeIn/2;
 	x = -thickness/2-0.1;
@@ -156,22 +105,6 @@ module holes_out(sizeOut, sizeIn, thickness, rad){
 	union(){				
 		for ( i = [0 : 3] ){
 			rotate([i*90, 0, 0]) translate([x, sizeIn/2+width/2-offset, sizeIn/2+width/2-offset]) rotate([0,90,0]) cylinder(r=rad+tol, h=thickness+0.2);			
-		}			
-	}
-}
-
-
-
-
-module holes_in(sizeOut, sizeIn, thickness, rad){
-	width = sizeOut/2-sizeIn/2;
-	x = -thickness/2-0.1;
-	offset = width/10;
-	tolerance = 1.1;
-	tol = 0.2;
-	union(){				
-		for ( i = [0 : 3] ){			
-			rotate([i*90, 0, 0]) translate([x, sizeIn/2-width/2+offset, sizeIn/2-width/2+offset]) rotate([0,90,0]) cylinder(r=rad+tol, h=thickness+0.2);
 		}			
 	}
 }
@@ -188,7 +121,6 @@ module holes_inAsy(sizeOut, sizeIn, thickness, rad){
 		}			
 	}
 }
-
 
 module nutCatches(sizeOut, sizeIn, thickness){
 	width = sizeOut/2-sizeIn/2;

@@ -1,46 +1,46 @@
+// Part of one joint that holds the arduino board
+
 use <include/arduinoNano.scad>;
 use <include/facePlate.scad>;
 use <include/sideWall.scad>;
 
-zugabe = 2+1;
-radiusLoch = 1;
-kantenlaenge = 53;
-wandstaerke = 2;
-laenge = 32;
-radiusRotationsgelenk = 9;
+
+size = 53;
+strength = 2;
+length = 32;
+radius = 9;
 factor = 0.65;
-accuracy_hole = 100;
-front_holeOffset = kantenlaenge*0.125/2;
+
 
 batteryMount(53);
 
 	 
-module batteryMount(kantenlaenge){	
-	//arduino nano halterung		
+module batteryMount(size){	
 	difference(){
-		translate([-laenge*1.5, -kantenlaenge/2, 0]){	
+		translate([-length*1.5, -size/2, 0]){	
 			difference(){	
 				union(){
 					//frontplate					
-					translate([0, kantenlaenge/2, 0]) mirror([0,0,1]) facePlateMagnetBus_v3(kantenlaenge, factor*kantenlaenge, 5);				
-					// Wand außen (usb)
+					translate([0, size/2, 0]) mirror([0,0,1]) facePlate(size, factor*size, 5);				
+					// wall with usb slot
 					hull(){
-						translate([0,(wandstaerke)/2+4.3,0]) sideWall(kantenlaenge-13, laenge+2, wandstaerke, radiusRotationsgelenk);	
-						translate([0,(wandstaerke)/2+5.8,0]) sideWall(kantenlaenge-17, laenge+1, wandstaerke, radiusRotationsgelenk-1);	
+						translate([0,(strength)/2+4.3,0]) sideWall(size-13, length+2, strength, radius);	
+						translate([0,(strength)/2+5.8,0]) sideWall(size-17, length+1, strength, radius-1);	
 					}
-					// Wand mit Servo
-					translate([0,kantenlaenge-(wandstaerke)/2-0.25,0]) 
+					// wall with servo
+					translate([0,size-(strength)/2-0.25,0]) 
 						rotate(a=0,v=[1,0,0]) 
-							sideWall_withServoAxisFix(kantenlaenge-4-7-2, laenge+6, wandstaerke+0.5, radiusRotationsgelenk);			
+							sideWall_withServoAxisFix(size-4-7-2, length+6, strength+0.5, radius);			
 				}
-				// Schrauben und Magnetlöcher
-				translate([0, kantenlaenge/2, 0]) mirror([0,0,1]) busContacts(kantenlaenge, factor*kantenlaenge, 5);						
-				translate([-3, kantenlaenge/2, 0]) mirror([1,0,0]) screws(kantenlaenge, factor*kantenlaenge, 7.5);			
-				translate([-3, kantenlaenge/2, 0]) rotate([-90,0,0])  mirror([1,0,0]) screws(kantenlaenge, factor*kantenlaenge, 7.5);			
+				// holes for screws and magnets
+				translate([0, size/2, 0]) mirror([0,0,1]) busContacts(size, factor*size, 5);
+				translate([2.5, size/2, 0]) mirror([0,0,1]) busContacts(size, factor*size, 5);						
+				translate([-3, size/2, 0]) mirror([1,0,0]) screws(size, factor*size, 7.5);			
+				translate([-3, size/2, 0]) rotate([-90,0,0])  mirror([1,0,0]) screws(size, factor*size, 7.5);			
 			}
 		}			
 		rotate(a=270, v=[0,1,0]) {		
-			translate([0,-1.5+2.5+1,laenge+6]) rotate(a=90, v=[0,0,1]) rotate(a=-5, v=[0,1,0]) arduinoNano();
+			translate([0,-1.5+2.5+1,length+6]) rotate(a=90, v=[0,0,1]) rotate(a=-5, v=[0,1,0]) arduinoNano();
 		}								
 	}
 }

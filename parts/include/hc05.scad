@@ -1,3 +1,5 @@
+// model of a bluetooth module with hc05 chip and pinout
+
 boardLength = 40;
 boardWidth = 17;
 boardHeight = 3;

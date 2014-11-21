@@ -1,3 +1,5 @@
+// This file can be used to generate the STL files.  
+
 use <parts/include/microServo.scad>;
 use <parts/servoMount.scad>;
 use <parts/batteryMount.scad>;
@@ -8,10 +10,12 @@ $fn=50;
 size = 53;
 faceStrength = 3;
 
-//mirror([0,0,1]) translate([0,0,-66])
-//translate([0,0,16]) 
-rotate(a=-90,v=[0,1,0]) robotModule(size);
-	
+
+//robotModule(size);
+
+translate([0,-size*1.1,0]) servoModule(size);
+arduinoModule(size);
+translate([0,size*1.1,0]) payloadModule(size);
 
 module robotModule(size){
 	difference(){
@@ -30,4 +34,35 @@ module robotModule(size){
 			}
 		}	
 	}
+}
+
+module servoModule(size){
+	rotate(a=-90,v=[0,1,0]) translate([.5,0,0])
+	difference(){
+		servoMount(size);			
+		translate([20,-0.9,0]){
+			rotate(a=-90, v=[1,0,0]) {		
+				servo();
+			}
+		}	
+	}
+}
+
+
+module arduinoModule(size){
+	rotate(a=-90,v=[0,1,0]) translate([50.5,0,0])
+		difference(){
+			batteryMount(size);	
+			translate([-5,0,0]){
+				rotate(a=-90, v=[1,0,0]) {		
+					mirror(0,1,0) #servo();
+				}
+			}		
+		}		
+}
+
+
+module payloadModule(size){
+	rotate(a=-90,v=[0,1,0]) translate([16,0,0])
+		batteryAddOn(size, 0.65*size, faceStrength);
 }

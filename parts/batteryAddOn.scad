@@ -1,3 +1,5 @@
+// main part of the payload slot
+
 use <include/facePlate.scad>;
 use <include/arduinoNano.scad>;
 use <include/hc05.scad>;
@@ -12,34 +14,25 @@ akkuLength = 50;
 akkuWidth = 30;
 akkuheight = 10.5;
 
+clipPull = -0.65;	
+clipRad = 4.125;
+add = 2.5;
+
 $fn=50;
+
 
 rotate([0,-90,0]) batteryAddOn(out, in, strength);
 
 
 module batteryAddOn(out, in, strength){
-	batteryHold = diff-5.5;
-	wiringHole_w = 3;
-	wiringHole_l = 3;
-	wiringHole_h = 4;
-
-	footMountingSize = 1.2;
-	clipTolerance = 0.3;
-	clipPull = -0.65;	
-
-	clipWidth = 1;
-	clipRad = 4.125;
-
 	frameWidth = (out-in)/2;
 	mountingWidth = 1.3*frameWidth;
 	stomWidth =0.25*mountingWidth;
 
-	add = 2.5;
-	
 	translate([-add/2,0,0]) difference(){
 		union(){	
 			difference(){
-				translate([-akkuheight+1-strength/2-1, 0, 0]) rotate(a=-90, v=([1,0,0])) facePlateMagnetBus_v3(out, in, 3+add);
+				translate([-akkuheight+1-strength/2-1, 0, 0]) rotate(a=-90, v=([1,0,0])) facePlate(out, in, 3+add);
 				for(i=[0:1]){
 					rotate([i*180,0,0]) translate([-akkuheight+strength/2-1-(strength+add)/2+(strength+add)/2,in/2-((out-in)/2),in/4]) cube([(strength+add)/2+1,in/3,in/3],center=true);
 				}				
