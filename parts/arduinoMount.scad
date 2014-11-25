@@ -12,10 +12,10 @@ radius = 9;
 factor = 0.65;
 
 
-batteryMount(53);
+arduinoMount(53);
 
 	 
-module batteryMount(size){	
+module arduinoMount(size){	
 	difference(){
 		translate([-length*1.5, -size/2, 0]){	
 			difference(){	

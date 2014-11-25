@@ -2,7 +2,7 @@
 
 use <parts/include/microServo.scad>;
 use <parts/servoMount.scad>;
-use <parts/batteryMount.scad>;
+use <parts/arduinoMount.scad>;
 use <parts/batteryAddOn.scad>;
 
 
@@ -23,7 +23,7 @@ module robotModule(size){
 			servoMount(size);	
 			translate([9+6,0,0]){
 				mirror(0,1,0){
-					batteryMount(size);	
+					arduinoMount(size);	
 				}
 			}
 			batteryAddOn(size, 0.65*size, faceStrength);
@@ -52,7 +52,7 @@ module servoModule(size){
 module arduinoModule(size){
 	rotate(a=-90,v=[0,1,0]) translate([50.5,0,0])
 		difference(){
-			batteryMount(size);	
+			arduinoMount(size);	
 			translate([-5,0,0]){
 				rotate(a=-90, v=[1,0,0]) {		
 					mirror(0,1,0) #servo();
